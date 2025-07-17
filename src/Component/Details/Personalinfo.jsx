@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import IMG from '../../assets/BatalogoBGremove.png';
+import IMG from '../../assets/BatalogoBgremove.png';
 import './personalinfo.css';
 import { useNavigate } from 'react-router-dom';
 
