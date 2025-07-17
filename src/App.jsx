@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Front from './Component/Details/Front/front.jsx';
 import Info from './Component/Details/Personalinfo.jsx';
-import EmpForm from './Component/Details/Employeedetail/employeedetail.jsx'; // Employee Form Page
+import EmpForm from './Component/Details/Employeedetail/Employeedetail.jsx'; // Employee Form Page
 import Bank from './Component/Details/BankDetails/BankDetails.jsx';
 import User from './Component/Details/User/User.jsx';
 import Login from './Component/Details/login/login.jsx';
