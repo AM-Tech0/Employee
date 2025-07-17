@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { registerUser, loginUser,getAllUsers } = require('../controllers/userController');
+const { registerUser, loginUser,getAllUsers,updateUser } = require('../controllers/userController');
 
 // Save Full Form
 router.post('/register', async (req, res) => {
@@ -42,6 +42,8 @@ router.post('/login', async (req, res) => {
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/all', getAllUsers);
+router.put('/update/:id', updateUser); // <- controller needed
+
 
 
 

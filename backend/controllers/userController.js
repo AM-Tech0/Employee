@@ -64,9 +64,37 @@ const getAllUsers = async (req, res) => {
 
 
 
+
+
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updateData = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, message: 'User updated', user: updatedUser });
+  } catch (error) {
+    console.error('Update error:', error);
+    res.status(500).json({ success: false, message: 'Server error while updating' });
+  }
+};
+
+
+
+
+
+
 module.exports = {
   registerUser,
   loginUser,
   getAllUsers,
+  updateUser,
   
 };
