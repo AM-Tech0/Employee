@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import IMG from '../../../assets/BatalogoBGremove.png';
+import IMG from '../../../assets/BatalogoBgremove.png';
 
 
 const Employeedetail = () => {
