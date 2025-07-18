@@ -1,33 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { FaSearch, FaEye } from 'react-icons/fa';
+import { FaSearch, FaEye, FaEdit } from 'react-icons/fa';
 
-
-const AdminDashboard = () => {
+const adminDash = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   useEffect(() => {
-  const fetchUsers = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api/user/all');
-      const data = await res.json();
-      console.log("Received data from backend:", data); // Optional: Debug
-      setUsers(data.users || []); // ✅ Fix: Use the array inside the object
-    } catch (err) {
-      toast.error("Failed to load user data");
-      console.error("Fetch error:", err);
-    }
-  };
-  fetchUsers();
-}, []);
-
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/user/all');
+        const data = await res.json();
+        setUsers(data.users || []);
+      } catch (err) {
+        toast.error("Failed to load user data");
+        console.error("Fetch error:", err);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const filteredUsers = users.filter(user =>
     user.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.personalInfo?.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleEditClick = (user) => {
+    setEditMode(true);
+    setEditData(JSON.parse(JSON.stringify(user))); // Deep clone
+  };
+
+  const handleEditChange = (section, field, value) => {
+    setEditData(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/user/update/${editData._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editData)
+      });
+      const result = await res.json();
+      if (result.success) {
+        toast.success("User updated successfully");
+        setEditMode(false);
+        setEditData(null);
+
+        // Refresh user list
+        const updatedUsers = users.map(u => u._id === editData._id ? editData : u);
+        setUsers(updatedUsers);
+      } else {
+        toast.error(result.message || "Update failed");
+      }
+    } catch (err) {
+      toast.error("Error updating user");
+    }
+  };
 
   return (
     <div className="p-6">
@@ -59,12 +97,18 @@ const AdminDashboard = () => {
               <td className="p-2">{user.userId}</td>
               <td className="p-2">{user.employeeInfo?.employeeId || 'N/A'}</td>
               <td className="p-2">{user.personalInfo?.name}</td>
-              <td className="p-2">
+              <td className="p-2 flex gap-2">
                 <button
                   onClick={() => setSelectedUser(user)}
                   className="text-blue-600 hover:text-blue-800"
                 >
                   <FaEye />
+                </button>
+                <button
+                  onClick={() => handleEditClick(user)}
+                  className="text-green-600 hover:text-green-800"
+                >
+                  <FaEdit />
                 </button>
               </td>
             </tr>
@@ -72,12 +116,11 @@ const AdminDashboard = () => {
         </tbody>
       </table>
 
-      {/* Detail Popup */}
+      {/* View Modal */}
       {selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded p-6 w-full max-w-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">User Details</h2>
-
             <div className="mb-2"><strong>Name:</strong> {selectedUser.personalInfo?.name}</div>
             <div className="mb-2"><strong>User ID:</strong> {selectedUser.userId}</div>
             <div className="mb-2"><strong>Employee ID:</strong> {selectedUser.employeeInfo?.employeeId}</div>
@@ -96,8 +139,92 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Edit Modal */}
+      {editMode && editData && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded p-6 w-full max-w-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Edit User</h2>
+
+            <div className="mb-2">
+              <label className="block font-semibold">Name</label>
+              <input
+                type="text"
+                value={editData.personalInfo?.name || ''}
+                onChange={(e) => handleEditChange('personalInfo', 'name', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label className="block font-semibold">Employee ID</label>
+              <input
+                type="text"
+                value={editData.employeeInfo?.employeeId || ''}
+                onChange={(e) => handleEditChange('employeeInfo', 'employeeId', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label className="block font-semibold">Designation</label>
+              <input
+                type="text"
+                value={editData.employeeInfo?.designation || ''}
+                onChange={(e) => handleEditChange('employeeInfo', 'designation', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label className="block font-semibold">Bank Name</label>
+              <input
+                type="text"
+                value={editData.bankInfo?.bankName || ''}
+                onChange={(e) => handleEditChange('bankInfo', 'bankName', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label className="block font-semibold">IFSC</label>
+              <input
+                type="text"
+                value={editData.bankInfo?.ifsc || ''}
+                onChange={(e) => handleEditChange('bankInfo', 'ifsc', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="mb-2">
+              <label className="block font-semibold">Nominee Name</label>
+              <input
+                type="text"
+                value={editData.bankInfo?.nomineeName || ''}
+                onChange={(e) => handleEditChange('bankInfo', 'nomineeName', e.target.value)}
+                className="border rounded px-2 py-1 w-full"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                onClick={() => setEditMode(false)}
+                className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default AdminDashboard;
+export default adminDash;
