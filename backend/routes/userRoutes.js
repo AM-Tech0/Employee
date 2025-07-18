@@ -4,7 +4,22 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { registerUser, loginUser,getAllUsers,updateUser } = require('../controllers/userController');
+// DELETE /api/user/delete/:id
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const deletedUser = await User.findByIdAndDelete(userId);
 
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Delete Error:', err);
+    res.status(500).json({ success: false, message: 'Server error during deletion' });
+  }
+});
 // Save Full Form
 router.post('/register', async (req, res) => {
   const { userId, password, personalInfo, employeeInfo, bankInfo } = req.body;
