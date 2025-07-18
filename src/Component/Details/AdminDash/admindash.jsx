@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { FaSearch, FaEye, FaEdit } from 'react-icons/fa';
+import { FaSearch, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
-const adminDash = () => {
+const AdminDash = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
@@ -24,13 +24,13 @@ const adminDash = () => {
   }, []);
 
   const filteredUsers = users.filter(user =>
-    user.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.userId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.personalInfo?.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleEditClick = (user) => {
     setEditMode(true);
-    setEditData(JSON.parse(JSON.stringify(user))); // Deep clone
+    setEditData(JSON.parse(JSON.stringify(user)));
   };
 
   const handleEditChange = (section, field, value) => {
@@ -55,8 +55,6 @@ const adminDash = () => {
         toast.success("User updated successfully");
         setEditMode(false);
         setEditData(null);
-
-        // Refresh user list
         const updatedUsers = users.map(u => u._id === editData._id ? editData : u);
         setUsers(updatedUsers);
       } else {
@@ -64,6 +62,28 @@ const adminDash = () => {
       }
     } catch (err) {
       toast.error("Error updating user");
+      console.error("Update error:", err);
+    }
+  };
+
+  const handleDelete = async (userId) => {
+    if (!window.confirm('Are you sure you want to delete this user?')) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/user/delete/${userId}`, {
+        method: 'DELETE',
+      });
+      const result = await res.json();
+      if (result.success) {
+        toast.success("User deleted successfully");
+        const updatedUsers = users.filter(u => u._id !== userId);
+        setUsers(updatedUsers);
+      } else {
+        toast.error(result.message || "Delete failed");
+      }
+    } catch (err) {
+      toast.error("Error deleting user");
+      console.error("Delete error:", err);
     }
   };
 
@@ -101,14 +121,23 @@ const adminDash = () => {
                 <button
                   onClick={() => setSelectedUser(user)}
                   className="text-blue-600 hover:text-blue-800"
+                  title="View"
                 >
                   <FaEye />
                 </button>
                 <button
                   onClick={() => handleEditClick(user)}
                   className="text-green-600 hover:text-green-800"
+                  title="Edit"
                 >
                   <FaEdit />
+                </button>
+                <button
+                  onClick={() => handleDelete(user._id)}
+                  className="text-red-600 hover:text-red-800"
+                  title="Delete"
+                >
+                  <FaTrash />
                 </button>
               </td>
             </tr>
@@ -124,7 +153,7 @@ const adminDash = () => {
             <div className="mb-2"><strong>Name:</strong> {selectedUser.personalInfo?.name}</div>
             <div className="mb-2"><strong>User ID:</strong> {selectedUser.userId}</div>
             <div className="mb-2"><strong>Employee ID:</strong> {selectedUser.employeeInfo?.employeeId}</div>
-            <div className="mb-2"><strong>DOB:</strong> {new Date(selectedUser.personalInfo?.dob).toLocaleDateString()}</div>
+            <div className="mb-2"><strong>DOB:</strong> {selectedUser.personalInfo?.dob ? new Date(selectedUser.personalInfo.dob).toLocaleDateString() : 'N/A'}</div>
             <div className="mb-2"><strong>Designation:</strong> {selectedUser.employeeInfo?.designation}</div>
             <div className="mb-2"><strong>Bank Name:</strong> {selectedUser.bankInfo?.bankName}</div>
             <div className="mb-2"><strong>IFSC:</strong> {selectedUser.bankInfo?.ifsc}</div>
@@ -227,4 +256,4 @@ const adminDash = () => {
   );
 };
 
-export default adminDash;
+export default AdminDash;
