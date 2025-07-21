@@ -239,6 +239,7 @@ const AdminDash = () => {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
 
+  // Fetch users on load
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -260,7 +261,7 @@ const AdminDash = () => {
 
   const handleEditClick = (user) => {
     setEditMode(true);
-    setEditData(JSON.parse(JSON.stringify(user)));
+    setEditData(JSON.parse(JSON.stringify(user))); // deep clone
   };
 
   const handleEditChange = (section, field, value) => {
@@ -303,11 +304,22 @@ const AdminDash = () => {
       const res = await fetch(`http://localhost:5000/api/user/delete/${userId}`, {
         method: 'DELETE',
       });
+
+      const contentType = res.headers.get("content-type");
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await res.text();
+        console.error("Non-JSON response:", text);
+        throw new Error("Unexpected response type (not JSON)");
+      }
+
       const result = await res.json();
       if (result.success) {
         toast.success("User deleted successfully");
-        const updatedUsers = users.filter(u => u._id !== userId);
-        setUsers(updatedUsers);
+        setUsers(users.filter(u => u._id !== userId));
       } else {
         toast.error(result.message || "Delete failed");
       }
@@ -487,3 +499,5 @@ const AdminDash = () => {
 };
 
 export default AdminDash;
+
+

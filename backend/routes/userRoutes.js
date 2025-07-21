@@ -60,7 +60,59 @@ router.get('/all', getAllUsers);
 router.put('/update/:id', updateUser); // <- controller needed
 
 
-
-
-
 module.exports = router;
+
+
+// module.exports = router;
+// const express = require('express');
+// const router = express.Router();
+// const User = require('../models/User'); // Adjust path if needed
+
+// // GET all users
+// router.get('/all', async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.json({ success: true, users });
+//   } catch (err) {
+//     console.error("Fetch error:", err);
+//     res.status(500).json({ success: false, message: "Error fetching users" });
+//   }
+// });
+
+// // UPDATE a user
+// router.put('/update/:id', async (req, res) => {
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+
+//     if (!updatedUser) {
+//       return res.status(404).json({ success: false, message: "User not found" });
+//     }
+
+//     res.json({ success: true, user: updatedUser });
+//   } catch (err) {
+//     console.error("Update error:", err);
+//     res.status(500).json({ success: false, message: "Error updating user" });
+//   }
+// });
+
+// // DELETE a user
+// router.delete('/delete/:id', async (req, res) => {
+//   try {
+//     const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+//     if (!deletedUser) {
+//       return res.status(404).json({ success: false, message: "User not found" });
+//     }
+
+//     res.json({ success: true, message: "User deleted successfully" });
+//   } catch (err) {
+//     console.error("Delete error:", err);
+//     res.status(500).json({ success: false, message: "Error deleting user" });
+//   }
+// });
+
+// module.exports = router;
