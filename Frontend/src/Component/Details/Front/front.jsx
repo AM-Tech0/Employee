@@ -1,5 +1,6 @@
 import React from "react";
-import IMG from "../../../assets/Batalogo.png";
+import IMG from "../../../assets/BatalogoBgremove.png";
+import IMG1 from "../../../assets/Frontimg.png";
 import { useNavigate } from "react-router-dom";
 import "./front.css";
 const front = () => {
@@ -11,7 +12,7 @@ const front = () => {
     <div className="front-container">
       <div>
         <div className="front">
-          <img src={IMG} width="300px" height="100px"></img>
+          <img src={IMG} ></img>
           <div className="front-header">
             <h3>Where style meets every step</h3>
             <a>
