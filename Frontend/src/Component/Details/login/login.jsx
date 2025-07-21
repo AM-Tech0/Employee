@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./login.css"; // Assuming you have a CSS file for styling
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import IMG from "../../../assets/Frontimg-remove.png"; 
-import IMG1 from '../../../assets/BatalogoBgremove.png'; // Assuming you have a logo image
+import IMG from "../../../assets/Frontimg-remove.png";
+import IMG1 from "../../../assets/BatalogoBgremove.png"; // Assuming you have a logo image
 
 const Login = () => {
   const [userId, setUserId] = useState("");
@@ -32,9 +32,9 @@ const Login = () => {
   };
 
   return (
-    <div className="login-slide-in login-container">
+    <div className="login-container">
       <div className="login">
-        <div className="login-slide-in-box login-box">
+        <div className=" login-box">
           <img className="login-logo" src={IMG1} alt="Logo" />
           <h2>Welcome Back!</h2>
           <h3>Employee Login</h3>
@@ -50,14 +50,15 @@ const Login = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
+            placeholder="Enter your password"/>
+           <input className="login-checkbox"
+              type="checkbox"
+              onClick={() => setShowPassword(!showPassword)}/>
+            <label className="pass">Show password</label>
           <button onClick={handleLogin}>Login</button>
-          
         </div>
-        
-            <img className="login-image" src={IMG} alt=""  />
-          
+
+        <img className="login-image" src={IMG} alt="" />
       </div>
     </div>
   );
