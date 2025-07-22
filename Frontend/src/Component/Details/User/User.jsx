@@ -43,7 +43,7 @@ const User = () => {
         <div className="user-box">
           <h1>User</h1>
           <h3>Create your user ID and password.</h3>
-          <div className="form">
+          
             <label>User ID</label>
             <input
               type="text"
@@ -64,7 +64,6 @@ const User = () => {
               onClick={() => setShowPassword(!showPassword)}
             />
             <label className="pass">Show password</label>
-          </div>
           <button className="btn" onClick={handleSubmitAll}>
             Save
           </button>
