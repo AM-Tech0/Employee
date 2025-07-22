@@ -240,3 +240,11 @@
     
     
 }
+@media screen and (max-width:425px) {
+    .user img{
+       display: none; 
+    }
+     .user-container{
+        background-image: linear-gradient(#f0b7b7);
+    } 
+}

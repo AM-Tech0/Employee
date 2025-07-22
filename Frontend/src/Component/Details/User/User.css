@@ -193,9 +193,15 @@
     width: 100%;
     height: 100%;
     margin-top: 0.5rem;
-    } 
+    }
+}
+@media screen and (max-width:425px) {
     .user img{
-       display: hidden; }
+       display: none; 
+    }
+     .user-container{
+        background-image: linear-gradient(#f0b7b7);
+    } 
 }
 
 
