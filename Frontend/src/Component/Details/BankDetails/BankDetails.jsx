@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import IMG from '../../../assets/BatalogoBgremove.png';
 import './Bankdetails.css';
+import IMG1 from '../../../assets/bankimg.png';
 
 const BankDetails = () => {
   const [accountNo, setAccountNo] = useState('');
@@ -19,11 +20,16 @@ const BankDetails = () => {
   };
 
   return (
-    <div className='info-container'>
-      <div className='info'>
-        <img src={IMG} alt="" width='150px' />
+    <div className='bank-container'>
+      <div className='bank'>
+        <div className="bank-left"> 
+                  <div></div>
+                  <div></div>
+                   <img className="bankimg" src={IMG1} alt=""/>
+                </div>
+        <div className='bank-box'>
+          <img src={IMG} alt=""/>
         <h1>Bank Details</h1>
-        <div className='form'>
           <label>Account No</label>
           <input type='text' value={accountNo} onChange={(e) => setAccountNo(e.target.value)} />
           <label>IFSC ID</label>
@@ -32,8 +38,8 @@ const BankDetails = () => {
           <input type='text' value={bankName} onChange={(e) => setBankName(e.target.value)} />
           <label>Nominee Name</label>
           <input type='text' value={nomineeName} onChange={(e) => setNomineeName(e.target.value)} />
-        </div>
         <button className='btn' onClick={handleNext}>Next</button>
+        </div>
       </div>
     </div>
   );

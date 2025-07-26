@@ -8,8 +8,8 @@ import EmpForm from './Component/Details/Employeedetail/Employeedetail.jsx'; // 
 import Bank from './Component/Details/BankDetails/BankDetails.jsx';
 import User from './Component/Details/User/User.jsx';
 import Login from './Component/Details/login/login.jsx';
-import Dash from './Component/Details/Dashboard/dashboard.jsx';
-import EmployeeDetails from './EmployeeDetailss.jsx'; // Final Info Display Page
+// import Dash from './Component/Details/Dashboard/dashboard.jsx';
+import EmployeeDetails from './Component/Details/Dashboard/EmployeeDetailss.jsx'; // Final Info Display Page
 import AdminDashboard from './Component/Details/AdminDash/admindash.jsx'; // Admin Dashboard Page
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* Dashboard */}
-        <Route path="/dash" element={<Dash />} />
+        {/* <Route path="/dash" element={<Dash />} /> */}
 
         {/* Final Employee Details Display */}
         <Route path="/employee-details" element={<EmployeeDetails />} />

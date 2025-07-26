@@ -24,7 +24,7 @@ const Personalinfo = () => {
         <div className="info-left"> 
           <div></div>
           <div></div>
-           <img src={IMG1} alt=""/>
+           <img className="infoimg" src={IMG1} alt=""/>
         </div>
         
         <div className="info-box">
