@@ -15,7 +15,7 @@ const User = () => {
   const { personalInfo, employeeInfo, bankInfo } = location.state || {};
 
   const handleSubmitAll = async () => {
-    const response = await fetch("https://employee-backend-fawn.vercel.app//api/user/register", {
+    const response = await fetch("https://employee-backend-fawn.vercel.app/api/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -48,7 +48,7 @@ const AdminDash = () => {
   const handleSave = async () => {
     try {
       const res = await fetch(
-        `https://employee-backend-fawn.vercel.app//api/user/update/${editData._id}`,
+        `https://employee-backend-fawn.vercel.app/api/user/update/${editData._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
