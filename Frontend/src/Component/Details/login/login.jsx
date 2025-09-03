@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./login.css"; // Assuming you have a CSS file for styling
+import "./Login.css"; // Assuming you have a CSS file for styling
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import IMG from "../../../assets/Frontimg-remove.png";
 import IMG1 from "../../../assets/BatalogoBgremove.png"; // Assuming you have a logo image
-
+i
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false); // 👈 add this state
   const [userId, setUserId] = useState("");
