@@ -13,7 +13,7 @@ const AdminDash = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/user/all");
+        const res = await fetch("https://employee-backend-fawn.vercel.app//api/user/all");
         const data = await res.json();
         setUsers(data.users || []);
       } catch (err) {
@@ -48,7 +48,7 @@ const AdminDash = () => {
   const handleSave = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/user/update/${editData._id}`,
+        `https://employee-backend-fawn.vercel.app//api/user/update/${editData._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -78,7 +78,7 @@ const AdminDash = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/user/delete/${userId}`,
+        `https://employee-backend-fawn.vercel.app//api/user/delete/${userId}`,
         {
           method: "DELETE",
         }
