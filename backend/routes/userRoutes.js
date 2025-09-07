@@ -58,8 +58,6 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/all', getAllUsers);
 router.put('/update/:id', updateUser); // <- controller needed
-
-
 module.exports = router;
 
 
