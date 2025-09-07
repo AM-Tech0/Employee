@@ -26,40 +26,19 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
-// ✅ CORS setup (works for both frontend + localhost dev)
-const allowedOrigins = [
-  "https://employee-weld-three.vercel.app", // your Vercel frontend
-  // "http://localhost:3000" // allow local dev frontend too
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "https://employee-weld-three.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
-);
+);app.use(express.json());
 
-// ✅ Handle preflight requests globally
-app.options("*", cors());
-
-app.use(express.json());
-
-// ✅ Root test route
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// ✅ User routes
 app.use("/api/user", userRoutes);
 
-// ✅ Export for Vercel (no app.listen)
+// ✅ Do not use app.listen() for Vercel
 module.exports = app;
