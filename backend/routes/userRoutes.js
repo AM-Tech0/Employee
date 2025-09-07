@@ -54,8 +54,8 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Login error' });
   }
 });
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+router.post("/login", loginUser);   // ✅ This gives /api/user/login
+router.post("/register", registerUser);
 router.get('/all', getAllUsers);
 router.put('/update/:id', updateUser); // <- controller needed
 module.exports = router;
