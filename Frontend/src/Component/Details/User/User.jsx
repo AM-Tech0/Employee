@@ -15,7 +15,7 @@ const User = () => {
   const { personalInfo, employeeInfo, bankInfo } = location.state || {};
 
   const handleSubmitAll = async () => {
-    const response = await fetch("https://backend-red-xi.vercel.app/api/user/register",
+    const response = await fetch("https://backend-iota-ten-32.vercel.app/api/user/register",
       // const response = await fetch("http://localhost:5000/api/user/register",
       {
       method: "POST",

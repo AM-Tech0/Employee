@@ -13,7 +13,7 @@ const AdminDash = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("https://backend-red-xi.vercel.app/api/user/all"
+        const res = await fetch("https://backend-iota-ten-32.vercel.app/api/user/all"
           // 'https://localhost:5000/api/user/all'
         );
         const data = await res.json();
@@ -50,7 +50,7 @@ const AdminDash = () => {
   const handleSave = async () => {
     try {
       const res = await fetch(
-        `https://backend-red-xi.vercel.app/api/user/update/${editData._id}`,
+        `https://backend-iota-ten-32.vercel.app/api/user/update/${editData._id}`,
         // `https://localhost:5000/api/user/update/${editData._id}`,
         {
           method: "PUT",
@@ -81,7 +81,7 @@ const AdminDash = () => {
 
     try {
       const res = await fetch(
-        `https://backend-red-xi.vercel.app/api/user/delete/${userId}`,
+        `https://backend-iota-ten-32.vercel.app/api/user/delete/${userId}`,
         // `http://localhost:5000/api/user/delete/${userId}`,
         {
           method: "DELETE",

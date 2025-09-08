@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch(`https://backend-red-xi.vercel.app/api/user/login`, {
+      const res = await fetch(`https://backend-iota-ten-32.vercel.app/api/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, password }),
