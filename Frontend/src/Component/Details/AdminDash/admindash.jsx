@@ -81,7 +81,7 @@ const AdminDash = () => {
 
     try {
       const res = await fetch(
-        `https://employee-backend-fawn.vercel.app/api/user/delete/${userId}`,
+        `https://backend-red-xi.vercel.app/api/user/delete/${userId}`,
         // `http://localhost:5000/api/user/delete/${userId}`,
         {
           method: "DELETE",
