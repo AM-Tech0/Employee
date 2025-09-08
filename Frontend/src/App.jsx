@@ -9,7 +9,7 @@ import Bank from './Component/Details/BankDetails/BankDetails.jsx';
 import User from './Component/Details/User/User.jsx';
 import Login from './Component/Details/login/login.jsx';
 import EmployeeDetails from './Component/Details/Dashboard/EmployeeDetailss.jsx'; // Final Info Display Page
-import AdminDash from './Component/Details/AdminDash/admindash.jsx'; // Admin Dashboard Page
+import AdminDash from './Component/Details/AdminDash.jsx';
 
 function App() {
   return (
