@@ -1,4 +1,3 @@
-// for vecel
 const mongoose = require("mongoose");
 
 let isConnected = false;
@@ -12,11 +11,12 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     isConnected = conn.connections[0].readyState;
-    console.log("MongoDB Connected");
+    console.log("✅ MongoDB Connected");
   } catch (err) {
-    console.error("DB connection error:", err.message);
+    console.error("❌ DB connection error:", err.message);
     throw err;
   }
 };
 
 module.exports = connectDB;
+

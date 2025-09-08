@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// /models/User.js
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true },
@@ -24,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     ifsc: String,
     bankName: String,
     nomineeName: String,
-  }
+  },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
