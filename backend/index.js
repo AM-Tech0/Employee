@@ -13,14 +13,31 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// ✅ Allowed origins (add your frontend + localhost for dev)
+const allowedOrigins = [
+  "https://employee-weld-three.vercel.app", // deployed frontend
+  "http://localhost:3000", // local development
+];
+
+// ✅ CORS setup
 app.use(
   cors({
-    origin: "https://employee-weld-three.vercel.app", // ✅ your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
+
+// ✅ Handle preflight requests
+app.options("*", cors());
+
+// Middleware
 app.use(express.json());
 
 // Default route
